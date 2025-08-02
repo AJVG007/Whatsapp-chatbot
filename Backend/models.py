@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Boolean
 from sqlalchemy.orm import relationship
-from db_config import Base
+from Backend.db_config import Base
 from datetime import datetime
 
 # Tabla intermedia grupo-contactos

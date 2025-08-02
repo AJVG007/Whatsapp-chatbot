@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from db_config import SessionLocal
-from models import ScheduledMessage, Group
+from Backend.db_config import SessionLocal
+from Backend.models import ScheduledMessage, Group
 from datetime import datetime
 
 router = APIRouter()
