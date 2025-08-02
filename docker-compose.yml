@@ -8,7 +8,9 @@ services:
     env_file:
       - ./backend/.env
     volumes:
-      - ./backend/whatsapp.db:/app/whatsapp.db
+      - .:/app
+    working_dir: /app
+    command: bash -c "PYTHONPATH=/app uvicorn Backend.main:app --host 0.0.0.0 --port 8000 --reload"
     restart: always
 
   frontend:
