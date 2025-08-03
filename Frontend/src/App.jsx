@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import React from 'react';
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -17,17 +18,17 @@ function App() {
   }, []);
 
   const fetchGroups = async () => {
-    const res = await axios.get('/api/groups');
+    const res = await axios.get('/api/groups/');
     setGroups(res.data);
   };
 
   const fetchMessages = async () => {
-    const res = await axios.get('/api/messages');
+    const res = await axios.get('/api/messages/');
     setScheduled(res.data);
   };
 
   const handleSchedule = async () => {
-    await axios.post('/api/messages', {
+    await axios.post('/api/messages/', {
       content: message,
       scheduled_time: date.toISOString(),
       group_id: parseInt(groupId),
