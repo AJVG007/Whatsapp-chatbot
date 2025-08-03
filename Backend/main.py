@@ -4,9 +4,11 @@ from Backend.routes import contacts, groups, messages
 app = FastAPI()
 
 # Incluir routers
-app.include_router(contacts.router)
-app.include_router(groups.router)
-app.include_router(messages.router)
+app.include_router(messages.router, prefix="/api")
+app.include_router(groups.router, prefix="/api")
+app.include_router(contacts.router, prefix="/api")
+
+
 
 from Backend.scheduler import scheduler, schedule_pending_messages
 
