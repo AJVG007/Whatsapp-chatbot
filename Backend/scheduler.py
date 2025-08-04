@@ -13,7 +13,7 @@ scheduler = BackgroundScheduler()
 
 def send_whatsapp_message(phone: str, message: str):
     if not WHATSAPP_TOKEN or not PHONE_NUMBER_ID:
-        print(f"⚠️ WhatsApp no configurado. Simulando envío a {phone}: {message}")
+        print(f"WhatsApp no configurado. Simulando envío a {phone}: {message}")
         return
 
     url = f"https://graph.facebook.com/v19.0/{PHONE_NUMBER_ID}/messages"
@@ -33,12 +33,12 @@ def send_whatsapp_message(phone: str, message: str):
     try:
         response = httpx.post(url, json=payload, headers=headers, timeout=10)
         response.raise_for_status()
-        print(f"✅ Enviado a {phone} | Status: {response.status_code}")
-        print(f"📝 Respuesta: {response.json()}")
+        print(f"Enviado a {phone} | Status: {response.status_code}")
+        print(f"Respuesta: {response.json()}")
     except httpx.HTTPStatusError as e:
-        print(f"❌ Error HTTP {e.response.status_code}: {e.response.text}")
+        print(f"Error HTTP {e.response.status_code}: {e.response.text}")
     except Exception as ex:
-        print(f"❌ Error inesperado: {ex}")
+        print(f"Error inesperado: {ex}")
 
 
 def process_scheduled_message(message_id: int):
