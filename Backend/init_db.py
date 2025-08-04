@@ -8,16 +8,18 @@ db = SessionLocal()
 group = Group(name="Equipo de Ventas")
 db.add(group)
 db.commit()
-db.refresh(group)  # Necesario para obtener el ID
+db.refresh(group)  # Obtener ID y sincronizar
 
-# Crear contactos con el group_id
+# Crear contactos asociándolos por relación, no por group_id directamente
 contacts_data = [
-    {"name": "Alan Baltra", "phone_number": "5215556128917", "group_id": group.id},
-    {"name": "Jair Velasco", "phone_number": "5212721310919", "group_id": group.id},
+    {"name": "Alan Baltra", "phone_number": "5215556128917"},
+    {"name": "Jair Velasco", "phone_number": "5212721310919"},
+    {"name": "Angel Gallardo", "phone_number": "522721310919"},
 ]
 
 for data in contacts_data:
     contact = Contact(**data)
+    contact.group = group  # ← Asociación correcta usando relación ORM
     db.add(contact)
 
 try:
