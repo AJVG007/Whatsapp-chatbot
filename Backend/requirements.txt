@@ -4,3 +4,4 @@ sqlalchemy
 httpx
 apscheduler
 python-dotenv
+requests
