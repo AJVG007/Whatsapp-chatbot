@@ -12,6 +12,8 @@ services:
     working_dir: /app
     command: bash -c "PYTHONPATH=/app uvicorn Backend.main:app --host 0.0.0.0 --port 8000 --reload"
     restart: always
+    depends_on:
+      - db
 
   frontend:
     build: ./frontend
@@ -19,3 +21,18 @@ services:
       - "3000:80"
     depends_on:
       - backend
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: baltra
+      POSTGRES_USER: baltra
+      POSTGRES_PASSWORD: baltra123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:

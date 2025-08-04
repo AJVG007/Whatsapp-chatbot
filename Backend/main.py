@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from Backend.routes import contacts, groups, messages
+from dotenv import load_dotenv
+load_dotenv()
+
 
 app = FastAPI()
 
@@ -14,6 +17,10 @@ from Backend.scheduler import scheduler, schedule_pending_messages
 
 @app.on_event("startup")
 def startup_event():
+    from Backend.db_config import Base, engine
+    from Backend import models
+    Base.metadata.create_all(bind=engine)
+
     schedule_pending_messages()
     scheduler.start()
 
