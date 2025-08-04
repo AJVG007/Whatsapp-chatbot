@@ -13,6 +13,7 @@ db.refresh(group)  # Obtener ID y sincronizar
 # Crear contactos asociándolos por relación, no por group_id directamente
 contacts_data = [
     {"name": "Alan Baltra", "phone_number": "5215556128917"},
+    {"name": "Tomas Baltra", "phone_number": "5216505165164"},
     {"name": "Jair Velasco", "phone_number": "5212721310919"},
     {"name": "Angel Gallardo", "phone_number": "522721310919"},
 ]
