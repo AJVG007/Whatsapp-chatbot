@@ -1,11 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from pydantic import BaseModel
 from Backend.db_config import SessionLocal
 from Backend.models import ScheduledMessage, Group
 from datetime import datetime
 
 router = APIRouter()
 
+# Pydantic model
+class MessageCreate(BaseModel):
+    content: str
+    scheduled_time: datetime
+    group_id: int
+
+# Dependency
 def get_db():
     db = SessionLocal()
     try:
@@ -14,19 +22,20 @@ def get_db():
         db.close()
 
 @router.post("/messages/")
-def schedule_message(content: str, scheduled_time: datetime, group_id: int, db: Session = Depends(get_db)):
-    group = db.query(Group).filter(Group.id == group_id).first()
+def schedule_message(data: MessageCreate, db: Session = Depends(get_db)):
+    group = db.query(Group).filter(Group.id == data.group_id).first()
     if not group:
         raise HTTPException(status_code=404, detail="Group not found")
 
     msg = ScheduledMessage(
-        content=content,
-        scheduled_time=scheduled_time,
-        group_id=group_id,
+        content=data.content,
+        scheduled_time=data.scheduled_time,
+        group_id=data.group_id,
     )
     db.add(msg)
     db.commit()
     db.refresh(msg)
+
     return {
         "id": msg.id,
         "content": msg.content,
